@@ -1,0 +1,472 @@
+{
+  "name": "Smart Job Alert System",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 9,
+              "triggerAtMinute": 10
+            },
+            {}
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -112,
+        16
+      ],
+      "id": "bbe256a1-cb1b-4869-b818-0aaef73796ee",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "72e6492c-f98f-4932-b2fa-ac24e2eed8cf",
+              "name": "title",
+              "value": "={{$json.position}}",
+              "type": "string"
+            },
+            {
+              "id": "af4379b4-9b05-459d-b516-09b594666965",
+              "name": "company",
+              "value": "={{$json.company}}",
+              "type": "string"
+            },
+            {
+              "id": "93db1ea6-d987-4c66-8f7e-99173db52b2d",
+              "name": "location",
+              "value": "={{$json.location}}",
+              "type": "string"
+            },
+            {
+              "id": "668fb584-009a-4b3e-b22a-5f9eff6392f4",
+              "name": "tags",
+              "value": "={{$json.tags}}",
+              "type": "string"
+            },
+            {
+              "id": "928a8a7f-936a-449d-bb2d-ff0816537aaa",
+              "name": "url",
+              "value": "={{$json.url}}",
+              "type": "string"
+            },
+            {
+              "id": "82f53472-bce8-44bf-acae-2e0fbc289561",
+              "name": "source",
+              "value": "RemoteOK",
+              "type": "string"
+            },
+            {
+              "id": "18a218f7-db5a-4f8e-a240-3503e68fd491",
+              "name": "posted_at",
+              "value": "={{ $json.date}}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        448,
+        0
+      ],
+      "id": "3d83f665-583e-40ee-9722-5d8fa69a5f16",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "b1b60b67-57f8-4f58-8901-d17d601c6d18",
+              "leftValue": "={{ $json.title.toLowerCase() }}",
+              "rightValue": "product manager",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            },
+            {
+              "id": "f57f8d26-6db0-4251-ab7c-c53a0ca48f8f",
+              "leftValue": "={{ $json.title.toLowerCase() }}",
+              "rightValue": "associate product manager",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            },
+            {
+              "id": "c35327df-b8af-4465-9a4a-e1c467dc1efd",
+              "leftValue": "={{ $json.title.toLowerCase() }}",
+              "rightValue": "product analyst",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            },
+            {
+              "id": "11ee13b0-6fe1-4b85-8a47-3aaf190ba03d",
+              "leftValue": "={{ $json.title.toLowerCase() }}",
+              "rightValue": "technical product manager",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "looseTypeValidation": "=",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        656,
+        0
+      ],
+      "id": "e20aeb86-b1c9-4775-8af0-c7772116e501",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "jsCode": "return items[0].json.jobs.map(job => ({\n  json: job\n}));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        304,
+        272
+      ],
+      "id": "758e104f-04e7-4389-933c-4d8ba126451b",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "url": "https://remotive.com/api/remote-jobs",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {}
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        112,
+        272
+      ],
+      "id": "f320fbee-ada0-4b76-b206-444ce7f87f41",
+      "name": "Remotive HTTP Request"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a511583b-5088-4922-935a-f3d847d8c392",
+              "name": "title",
+              "value": "={{ $json.title }}",
+              "type": "string"
+            },
+            {
+              "id": "53fcd4be-75e3-4014-8061-ad004cf84971",
+              "name": "company",
+              "value": "={{ $json.company_name }}",
+              "type": "string"
+            },
+            {
+              "id": "89be80e8-51c7-4acc-8747-5a38ceec55b6",
+              "name": "location",
+              "value": "={{ $json.candidate_required_location }}",
+              "type": "string"
+            },
+            {
+              "id": "e6fb7fb9-1fc4-4037-9226-d65047d5a7a2",
+              "name": "tags",
+              "value": "={{ $json.tags.join(\", \")}}",
+              "type": "string"
+            },
+            {
+              "id": "be8eaf61-06fd-433c-b93d-6d4d06417075",
+              "name": "url",
+              "value": "={{ $json.url }}",
+              "type": "string"
+            },
+            {
+              "id": "bf051920-1179-4210-95cf-a96d08bd3901",
+              "name": "source",
+              "value": "Remotive",
+              "type": "string"
+            },
+            {
+              "id": "19393d61-5ea7-4ad3-ab59-e46a12a7fa40",
+              "name": "posted_at",
+              "value": "={{ $json.publication_date }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        512,
+        272
+      ],
+      "id": "425dd85a-87a5-4f17-820c-ee7304337f6f",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "66646c08-bbe4-4d0e-a3f8-33bf954c37ed",
+              "leftValue": "={{ $json.title.toLowerCase() }}",
+              "rightValue": "associate product manager",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            },
+            {
+              "id": "43158b1b-7746-4fff-aaf7-9d0f652894ce",
+              "leftValue": "={{ $json.title.toLowerCase() }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        720,
+        272
+      ],
+      "id": "e434d81e-6cec-4f49-8fc7-f4cffcd8eb8f",
+      "name": "If1"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        992,
+        112
+      ],
+      "id": "5492947c-cec2-48c0-8cec-210183d198fc",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "jsCode": "let message = \"📊 Product Management Job Alerts\\n\\n\";\n\nitems.forEach((job, index) => {\n  message += `${index + 1}. ${job.json.title}\\n`;\n  message += `🏢 ${job.json.company}\\n`;\n  message += `🌍 ${job.json.location}\\n`;\n  message += `🔗 ${job.json.url}\\n\\n`;\n});\n\nreturn [{\n  json: {\n    emailBody: message\n  }\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1232,
+        112
+      ],
+      "id": "eeee3531-57c1-4539-a522-89d36c2abc1e",
+      "name": "Code in JavaScript1"
+    },
+    {
+      "parameters": {
+        "toRecipients": "=yashharale2003@gmail.com",
+        "subject": "Daily Product Management Job Alerts",
+        "bodyContent": "={{$json.emailBody}}\n",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.microsoftOutlook",
+      "typeVersion": 2,
+      "position": [
+        1488,
+        112
+      ],
+      "id": "429f8182-dabc-4c52-b1f3-a89fdfff88b6",
+      "name": "Send a message",
+      "webhookId": "8e80070e-7bbc-44cf-913c-c23703051071",
+      "credentials": {
+        "microsoftOutlookOAuth2Api": {
+          "id": "ONG7j6ymbqGClkZV",
+          "name": "Microsoft Outlook account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://remoteok.com/api",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        208,
+        -16
+      ],
+      "id": "34fa6479-4374-4a48-81db-266e8ac66f5e",
+      "name": "RemoteOK HTTP Request"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "RemoteOK HTTP Request",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Remotive HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Remotive HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript1": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RemoteOK HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "cde0cf85-713a-4a5b-9664-6d2b5754f777",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "9b4af0443e8e4f860dad22394ac58c701ff3b2a675b614f23ade29b6a5f636f1"
+  },
+  "id": "5ZleSqvpGseWifECld8E3",
+  "tags": []
+}
