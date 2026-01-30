@@ -1,4 +1,4 @@
-# Automated Product Management Job Alerts (n8n)
+# Automated Job Alerts (n8n)
 
 An end-to-end automation that fetches, filters, and delivers **Product Management job alerts** from multiple sources using **n8n**, and sends a **daily email digest** automatically.
 
