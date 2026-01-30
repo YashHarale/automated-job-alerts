@@ -55,5 +55,4 @@ Below is the complete n8n workflow used in this project:
 
 ---
 
-## 📂 Repository Structure
 
