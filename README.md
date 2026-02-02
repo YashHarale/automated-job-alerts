@@ -33,7 +33,7 @@ This project demonstrates real-world automation, API integration, data normaliza
 - **n8n** – Workflow automation
 - **RemoteOK API** – Remote job listings
 - **Remotive API** – Remote job listings
-- **Gmail SMTP** – Email delivery
+- **(Send Email)SMTP** – Email delivery
 - **JavaScript** – Custom logic inside n8n Code nodes
 
 ---
