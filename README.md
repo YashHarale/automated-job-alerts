@@ -53,6 +53,6 @@ Below is the complete n8n workflow used in this project:
 6. A structured email body is generated  
 7. Email is sent to the user automatically  
 
----
+
 
 
