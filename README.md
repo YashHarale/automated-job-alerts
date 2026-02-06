@@ -6,7 +6,7 @@ This project demonstrates real-world automation, API integration, data normaliza
 
 ---
 
-## 🚀 What This Project Does
+## What This Project Does
 
 - Fetches remote jobs from **RemoteOK** and **Remotive**
 - Filters roles relevant to **Product Management**
@@ -17,18 +17,18 @@ This project demonstrates real-world automation, API integration, data normaliza
 
 ---
 
-## 🧠 Key Features
+## Key Features
 
-- 🔄 Multi-source job aggregation  
-- 🎯 Role-based filtering (PM, APM, TPM, Product Analyst)  
-- 🧹 Data normalization across APIs  
-- 📬 Automated email delivery  
-- ⏰ Daily scheduled execution  
-- 🧩 Low-code but production-style workflow design  
+- 1. Multi-source job aggregation  
+- 2. Role-based filtering (PM, APM, TPM, Product Analyst)  
+- 3. Data normalization across APIs  
+- 4. Automated email delivery  
+- 5. Daily scheduled execution  
+- 6. Low-code but production-style workflow design  
 
 ---
 
-## 🛠 Tech Stack
+## Tech Stack
 
 - **n8n** – Workflow automation
 - **RemoteOK API** – Remote job listings
@@ -38,7 +38,7 @@ This project demonstrates real-world automation, API integration, data normaliza
 
 ---
 
-## 🖼 Workflow Overview
+## Workflow Overview
 
 Below is the complete n8n workflow used in this project:
 
